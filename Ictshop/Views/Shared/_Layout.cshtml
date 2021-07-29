@@ -1,0 +1,267 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> PALUNA - Điện thoại rẻ Lâm Đồng</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    <link rel=" stylesheet" href="~/Content/jquery-ui.css" />
+    <link rel="stylesheet" href="~/Content/bootstrap.min.css" />
+    <link rel=" stylesheet" href="~/Content/Style.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <script src="~/Scripts/jquery-ui.js"></script>
+    <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+    <script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
+    <script src="~/Scripts/jquery-3.4.1.js"></script>
+    <script src="~/Scripts/jquery-3.4.1.min.js"></script>
+    @using PALUNA.Models
+    @using PALUNA.Utilties
+
+    <style type="text/css">
+        body {
+            /*background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+            background-size: 400% 400%;
+            animation: gradient 15s ease infinite;*/
+            background: white;
+        }
+
+        @@keyframes gradient {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+
+        .navbar-inverse {
+            background-color: #74aaaa;
+            border-color: #39B54A;
+        }
+
+        .top_header {
+            background-color: black;
+            padding-left: 110px;
+            color: white;
+        }
+
+        .form-inline {
+            float: right;
+            padding-top: 10px;
+        }
+
+        .navbar-inverse .navbar-nav > li > a {
+            color: white;
+            font-size: x-large;
+        }
+
+        .navbar-inverse .navbar-brand {
+            color: white;
+        }
+
+        .navbar-inverse .navbar-nav > li > a {
+            color: white;
+            font-size: large;
+        }
+
+            .navbar-inverse .navbar-nav > li > a:hover {
+                color: black;
+            }
+
+        .navbar-brand {
+            color: cadetblue;
+        }
+
+        .spnoibat {
+            background-color: white;
+        }
+
+            .spnoibat h3 {
+                padding-left: 30px;
+            }
+
+        .giohang {
+            color: white;
+        }
+
+        .font-nav {
+            color: #75aaaa;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-weight: bold;
+        }
+    </style>
+
+
+
+</head>
+
+<body>
+
+    @{
+        var u = Session["use"] as PALUNA.Models.Nguoidung;
+    }
+
+    <div class="navbar navbar-inverse navbar-fixed-top">
+
+        <div class="top_header col-md-12">
+
+            <div class="row">
+                @*<div class="col-sm-2"><img class="navbar-brand" src="~/HinhanhSP/logo1.jpg" width="20" height="20" style="padding:0" /></div>*@
+                <div class="col-sm-4 col-md-0" style="font-size:large">PALUNA</div>
+
+                <div class="col-sm-4 col-md-0" style="padding-left:250px">
+                    @Html.Action("GioHangPartial", "GioHang", new { @class = "giohang" })
+                </div>
+                @*@Html.Action("GioHangPartial", "GioHang",new { @style = "color:while" })*@
+                @{
+                    if (u != null)
+                    {
+                        <div class="col-sm-4 col-md-0">
+                            Xin chào : @u.Email
+                            &nbsp;
+                            @*@Html.ActionLink("ĐĂNG XUẤT", "DangXuat", "User", new { style = "color:red" })*@
+                            <a style="color:red" href="/User/DangXuat"> ĐĂNG XUẤT</a>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="col-sm-4 col-md-0">
+                            <a style="color:white" href="/User/Dangky"> Đăng ký</a>
+                            &nbsp;
+                            <a style="color:white" href="/User/Dangnhap"> Đăng nhập</a>
+                        </div>
+                    }
+                }
+
+
+            </div>
+
+        </div>
+        <div class="container">
+
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+
+                <a href="/">
+                    <img class="navbar-brand" src="~/HinhanhSP/2.jpg" width="75" height="150" style="padding:0" />
+                </a>
+                <!--@Html.ActionLink("PALUNA", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+
+                <form class="form-inline" style="float:left">
+                    <input class="form-control mr-sm-2" type="search" placeholder="Tìm kiếm sản phẩm..." aria-label="Search">
+                    @*<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>*@
+                </form>-->
+                <div class="search_box form-inline" style="float:left">
+                    <form action="/Home/Search" method="get" name="timkiem">
+                        <input class="form-control mr-sm-2" type="text" id="txtKeyword" name="key" placeholder="Tìm kiếm sản phẩm">
+                        <button class="btn btn-outline-success my-2 my-sm-0" type="submit" value="">Tìm Kiếm</button>
+                        <!--<input type="submit" value="">-->
+                    </form>
+                </div>
+                <div class="clear"></div>
+            </div>
+
+            <div class="navbar-collapse collapse">
+
+                @{
+                    Html.RenderPartial("ProductTypePartial", new Qlbanhang().LoaiSanPhams.Where(m => m.Sanphams.Any()).ToList());
+                }
+            </div>
+
+        </div>
+    </div>
+
+
+    <br>
+
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <div>
+            <img class="img-responsive" src="~/HinhanhSP/ban2.jpg" />
+        </div>
+        <br />
+    </div>
+    <footer class="bg-info" style="padding-left:50px">
+        <div class="row">
+            <div class="col-md-3 col-sm-6">
+                <h2>Bảo hành</h2>
+                <span><a href="https://www.w3schools.com/" target="_blank" rel="noopener noreferrer">Chính sách mua hàng</a></span>
+                <br />
+                <span><a href="https://www.w3schools.com/" target="_blank" rel="noopener noreferrer">Chính sách bảo hành</a> </span>
+                <br />
+                <span><a href="https://www.w3schools.com/" target="_blank" rel="noopener noreferrer">Trung tâm bảo hành</a></span>
+                <br />
+                <span><a href="https://www.w3schools.com/" target="_blank" rel="noopener noreferrer">Tra cứu bảo hành</a></span>
+            </div>
+            <div class="col-md-3 col-sm-6">
+                <h2>Liên kết</h2>
+                <span><a href="https://hoanghamobile.com/tin-tuc/" target="_blank" rel="noopener noreferrer">Tin tức Mobile</a></span>
+                <br />
+                <span><a href="http://thaypher.net" target="_blank" rel="noopener noreferrer">Lập trình Web</a></span>
+                <br />
+                <span><a href="https://genk.vn/mobile.chn" target="_blank" rel="noopener noreferrer">GenkVN</a></span>
+                <br />
+                <span><a href="https://dantri.com.vn/" target="_blank" rel="noopener noreferrer">Dân trí</a></span>
+
+
+            </div>
+            <div class="col-md-3 col-sm-6">
+                <h2>Thông tin</h2>
+                <span><a href="https://www.w3schools.com/" target="_blank" rel="noopener noreferrer">Về chúng tôi</a></span>
+                <br />
+                <span><a href="https://www.w3schools.com/" target="_blank" rel="noopener noreferrer">Liên hệ</a></span>
+                <br />
+                <span><a href="https://www.w3schools.com/" target="_blank" rel="noopener noreferrer">Góp ý</a></span>
+                <br />
+                <span><a href="https://www.w3schools.com/" target="_blank" rel="noopener noreferrer">Tra cứu</a></span>
+            </div>
+            <div class="col-md-3 col-sm-6">
+                <h2>Theo dõi</h2>
+                <span><a href="https://www.youtube.com/channel/UCt87RfR60ffidqdBqJ2i_zQ">Kênh youtube</a></span>
+                <br />
+                <span><a href="http://kath-nguyen.me" target="_blank" rel="noopener noreferrer">Fanpage</a></span>
+                <br />
+                <span><a href="https://shopee.vn/" target="_blank" rel="noopener noreferrer">Shopee</a></span>
+                <br />
+                <span><a href="https://www.w3schools.com/" target="_blank" rel="noopener noreferrer">Group</a></span>
+
+            </div>
+        </div>
+        <hr />
+        <center> <p class="bg-primary">&copy; @DateTime.Now.Year - PALUNA</p></center>
+    </footer>
+
+
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+    <!--Start of Tawk.to Script-->
+    <script type="text/javascript">
+        var Tawk_API = Tawk_API || {}, Tawk_LoadStart = new Date();
+        (function () {
+            var s1 = document.createElement("script"), s0 = document.getElementsByTagName("script")[0];
+            s1.async = true;
+            s1.src = 'https://embed.tawk.to/60def89665b7290ac63911a3/1f9jfm3sp';
+            s1.charset = 'UTF-8';
+            s1.setAttribute('crossorigin', '*');
+            s0.parentNode.insertBefore(s1, s0);
+        })();
+    </script>
+    <!--End of Tawk.to Script-->
+</body>
+</html>
+

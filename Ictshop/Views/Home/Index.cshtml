@@ -1,0 +1,47 @@
+﻿@{
+    ViewBag.Title = "PALUNA";
+
+}
+
+
+<br />
+<div class="row" style = "border-radius: 25px" >
+    <div class="col-md-8">
+        @Html.Action("SlidePartial", "Home")
+    </div>
+    <div class="col-md-4">
+        <img src="~/HinhanhSP/qc3.gif" class="img-responsive" alt="" />
+
+    </div>
+</div>
+<div>
+    <img class="img-responsive" src="~/HinhanhSP/ban1.jpg" />
+</div>
+<br />
+<div class="spnoibat">
+    <div class="row" style = "border-radius: 25px">
+
+        <h3> SẢN PHẨM NỔI BẬT</h3>
+        <div class="col-md-4">
+            <a href="https://gadgets.ndtv.com/mobiles/news/samsung-galaxy-s20-plus-jennie-red-aura-red-ultra-blackpink-price-specifications-2183750" target="_blank" rel="noopener noreferrer"><img src="~/HinhanhSP/spnb1.png" class="img-responsive" alt="" /></a>
+</div>
+        <div class="col-md-4">
+            <a href="https://www.gsmarena.com/oppo_f3-8669.php" target="_blank" rel="noopener noreferrer"><img src="~/HinhanhSP/spnb2.png" class="img-responsive" alt="" /></a>
+</div>
+        <div class="col-md-4">
+            <a href="https://www.gsmarena.com/oppo_f9_(f9_pro)-9286.php" target="_blank" rel="noopener noreferrer"><img src="~/HinhanhSP/spnb3.png" class="img-responsive" alt="" /></a>
+</div>
+    </div>
+</div>
+@Html.Action("DanhmucPartial", "Danhmuc", new { typeId = ViewBag.TypeId })
+
+<div class="row" style = "border-radius: 25px">
+    <h2> Tin tức sản phẩm</h2>
+    <div class="col-md-8">
+        Video
+    </div>
+    <div class="col-md-4">
+        Tin tức
+    </div>
+</div>
+
