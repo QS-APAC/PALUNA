@@ -1,0 +1,153 @@
+﻿@using PALUNA.Models;
+@model IEnumerable<IGrouping<Hangsanxuat, Sanpham>>
+
+
+@if (Model != null && Model.Any())
+{
+    <style type="text/css">
+        ._checkbox {
+            display: inline-block;
+            position: relative;
+        }
+
+            ._checkbox input:checked + label {
+                color: #FFF;
+                background: #005bac;
+                border: solid 1px #005bac;
+            }
+
+            ._checkbox label {
+                display: inline-block;
+                padding: 6px;
+                background: #fff;
+                border: 1px solid #979797;
+                border-radius: 6px;
+                color: #0C419A;
+                font-size: 14px;
+                line-height: 14px;
+                text-align: center;
+                cursor: pointer;
+                margin: 3px 3px 0 0;
+            }
+
+            ._checkbox input {
+                cursor: pointer;
+                position: absolute;
+                top: 0;
+                opacity: 0;
+                width: 100%;
+                height: 100%;
+                display: inline-block;
+            }
+
+            ._checkbox label {
+                display: inline-block;
+                padding: 6px;
+                background: #fff;
+                border: 1px solid #979797;
+                border-radius: 6px;
+                color: #0C419A;
+                font-size: 14px;
+                line-height: 14px;
+                text-align: center;
+                cursor: pointer;
+                margin: 3px 3px 0 0;
+            }
+    </style>
+    <script type="text/javascript" src="~/Content/Scripts/ListModel.js"></script>
+    <div class="danhmuc">
+        <br />
+
+        <div class="bg-success">
+
+            <h3> DANH MỤC  </h3>
+
+            <div class="row" id="listModel" style="padding-left: 60px">
+
+                @foreach (var item in Model)
+                {
+                    <div class="_checkbox">
+                        <input latestSkip=4 type="checkbox" modelId="@item.Key.Mahang">
+                        <label modelId="@item.Key.Mahang" id="refine1-1-1">@item.Key.Tenhang</label>
+                    </div>
+                    @*<div class="col-lg-1">
+                            <button class="success"><button class="filter-model" isCLick="0" id="@item.Mahang" href="#"> @item.Tenhang</button></button>
+                        </div>*@
+                }
+            </div>
+        </div>
+    </div>
+    <div id="productByModel">
+        @foreach (var danhmuc in Model)
+        {
+
+            <div class="dt">
+
+                <div class="row" modelId="@danhmuc.Key.Mahang" id="model-@danhmuc.Key.Mahang">
+                    <div class=" bg-danger">
+                        <h3> @danhmuc.Key.Tenhang.ToUpper() </h3>
+                    </div>
+                    <div class="list-product" modelId="@danhmuc.Key.Mahang">
+                        @foreach (var item in danhmuc.Take(4))
+                        {
+                            <div class="col-md-3 col-sm-6">
+                                <a href="@Url.Action("xemchitiet", "Sanpham", new {@Masp = item.Masp})">
+                                    <img src=@Url.Content("~/HinhanhSP/" + item.Anhbia) class="img-responsive" alt="" width="400" height="400" />
+                                </a>
+                                <center>
+                                    <h3> @item.Tensp</h3>
+                                    <h3 style="color: red">Giá: @Html.DisplayFor(modelItem => item.Giatien) </h3>
+                                    <br />
+                                    @using (Html.BeginForm("ThemGioHang", "GioHang", new { @iMasp = item.Masp, @strURL = Request.Url.ToString() }))
+                                    {
+                                        <input type="submit" value="Mua hàng" id="bgnGioHang" />
+
+                                    }
+
+                                    @*<h4> <a href="@Url.Action("xemchitiet", new {@Masp=item.Masp })">Xem chi tiết</a></h4>*@
+
+
+                                </center>
+
+                            </div>
+                        }
+                    </div>
+
+
+
+                    @*<div class="col-md-3 col-sm-6">
+                            <img src="~/HinhanhSP/ip3.jpg" class="img-responsive" alt="" />
+                        </div>
+                        <div class="col-md-3 col-sm-6">
+                            <img src="~/HinhanhSP/ip3.jpg" class="img-responsive" alt="" />
+                        </div>
+                        <div class="col-md-3 col-sm-6">
+                            <img src="~/HinhanhSP/ip3.jpg" class="img-responsive" alt="" />
+                        </div>*@
+                </div>
+            </div>
+        }
+    </div>
+
+    <script type="text/template" id="product-model">
+        <div class="col-md-3 col-sm-6">
+            <a href="/Sanpham/xemchitiet?Masp={{productCode}}">
+                <img src="/HinhanhSP/{{productImage}}" class="img-responsive" alt="" width="400" height="400" />
+            </a>
+            <center>
+                <h3> {{productName}}</h3>
+                <h3 style="color:red">Giá: {{productPrice}}</h3>
+                <br />
+                <form class="payment-form" action="/GioHang/ThemGioHang?iMasp={{productCode}}&strURL=@Request.Url.ToString()" method="post">
+                    <input type="submit" value="Mua hàng" id="bgnGioHang">
+                </form>
+            </center>
+
+        </div>
+    </script>
+    <script type="text/template" id="row-model">
+
+    </script>
+
+}
+
